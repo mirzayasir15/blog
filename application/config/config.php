@@ -15,6 +15,7 @@
 |
 */
 $config['base_url']	= 'http://localhost/yasir/blog/';
+//$config['base_url']	= 'http://localhost/yasir/blog/';
 
 /*
 |--------------------------------------------------------------------------
