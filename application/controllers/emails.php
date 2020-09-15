@@ -12,7 +12,7 @@ class Emails extends CI_Controller
         {
             if($row['email'])
             {
-                $this->email->from('al.imran.cse@gmail.com');
+                $this->email->from('admin@gmail.com');
                 $this->email->to($row['email']);
                 $this->email->subject('New Letter form Imran Blogs');
                 $this->email->message('Hi, This a news letter form imran\'s blog. Thank you for being connected');

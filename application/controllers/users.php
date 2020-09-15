@@ -6,8 +6,43 @@ class Users extends CI_Controller
         parent::__construct();
         $this->load->model('m_user');
     }
-    function login()
-    {
+
+    function all() {
+
+        $this->db->select()->from('users');
+        $query = $this->db->get();
+        $data["users"] = $query->result();
+
+        /*$xcrud = xcrud_get_instance();
+        $xcrud->table('users');
+        $xcrud->where("deleted_at IS NULL ");
+        $xcrud->show_primary_ai_field(false);
+        $xcrud->columns('email, username, user_type');
+        $xcrud->fields('email, username, type');
+        $xcrud->unset_add();
+        $xcrud->unset_edit();
+        $xcrud->unset_title();
+        $xcrud->unset_print();
+        $xcrud->unset_csv();
+        $xcrud->unset_limitlist();
+
+        $data['users'] = $xcrud->render();*/
+
+        $class_name = array(
+            'home_class'=>'', 
+            'login_class' =>'', 
+            'register_class' => '',
+            'upload_class'=>'',
+            'contact_class'=>'',
+            'all_users' => 'current'
+        );
+        
+        $this->load->view('header',$class_name);
+        $this->load->view('v_users', $data);
+        $this->load->view('footer');
+    }
+
+    function login() {
         if($this->session->userdata("user_id"))//If already logged in
         {
             redirect(base_url());//redirect to the blog page
@@ -25,7 +60,7 @@ class Users extends CI_Controller
                 $this->session->set_userdata('user_id', $user['user_id']);
                 $this->session->set_userdata('username', $user['username']);
                 $this->session->set_userdata('user_type',$user['user_type']);
-                redirect(base_url().'index.php/blog/');
+                redirect(base_url().'blog/');
             }
         }
         $class_name = array(
@@ -33,18 +68,20 @@ class Users extends CI_Controller
             'login_class' => 'current', 
             'register_class' => '',
             'upload_class'=>'',
-            'contact_class'=>'');
+            'contact_class'=>'',
+            'all_users' => ''
+        );
         $this->load->view('header',$class_name);
         $this->load->view('v_login',$data);
         $this->load->view('footer');
     }
-    function logout()
-    {
+
+    function logout() {
         $this->session->sess_destroy();
-        redirect(base_url().'index.php/blog/');
+        redirect(base_url().'blog/');
     }
-    function register()
-    {
+
+    function register() {
         $data['error'] = NULL;
         if($this->input->post())
         {
@@ -93,7 +130,7 @@ class Users extends CI_Controller
                 $this->session->set_userdata('user_id',$user_id);
                 $this->session->set_userdata('username',$this->input->post('username'));
                 $this->session->set_userdata('user_type',$this->input->post('user_type'));
-                redirect(base_url().'index.php/blog/');
+                redirect(base_url().'blog/');
             }
             
         }
@@ -102,7 +139,9 @@ class Users extends CI_Controller
             'login_class' =>'', 
             'register_class' => 'current',
             'upload_class'=>'',
-            'contact_class'=>'');
+            'contact_class'=>'',
+            'all_users' => ''
+        );
         
         $this->load->view('header',$class_name);
         $this->load->view('v_register',$data);

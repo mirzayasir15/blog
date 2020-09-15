@@ -13,7 +13,9 @@ class Upload extends CI_Controller {
             'login_class' => '',
             'register_class' => '',
             'upload_class' => 'current',
-            'contact_class' => '');
+            'contact_class' => '',
+            'all_users' => ''
+        );
         
         $this->load->view('header',$class_name);
         $this->load->view('v_upload_form', array('error' => ' '));
@@ -34,7 +36,9 @@ class Upload extends CI_Controller {
             'login_class' => '',
             'register_class' => '',
             'upload_class' => 'current',
-            'contact_class' => '');
+            'contact_class' => '',
+            'all_users' => ''
+        );
 
         if (!$this->upload->do_upload()) {//If there is error when uploading file
             $error = array('error' => $this->upload->display_errors());

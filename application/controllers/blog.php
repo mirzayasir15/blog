@@ -12,13 +12,13 @@ class Blog extends CI_Controller {
 
         //pagination
         $this->load->library('pagination');
-        $config['base_url'] = base_url() . 'index.php/blog/index/';//url to set pagination
+        $config['base_url'] = base_url() . 'blog/index/';//url to set pagination
         $config['total_rows'] = $this->m_db->get_post_count();
         $config['per_page'] = 5;
         $this->pagination->initialize($config);
         $data['pages'] = $this->pagination->create_links(); //Links of pages
 
-        $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '');
+        $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '', 'all_users'=> '');
         $this->load->view('header', $class_name);
         $this->load->view('v_home', $data);
         $this->load->view('footer');
@@ -40,7 +40,7 @@ class Blog extends CI_Controller {
         $data['pages'] = $this->pagination->create_links(); //Links of pages
         $data['query'] = $query; //Links of pages
 
-        $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '');
+        $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '', 'all_users'=> '');
         $this->load->view('header', $class_name);
         $this->load->view('v_search', $data);
         $this->load->view('footer');
@@ -51,7 +51,7 @@ class Blog extends CI_Controller {
         $this->load->model('m_comment');
         $data['comments'] = $this->m_comment->get_comment($post_id);
         $data['post'] = $this->m_db->get_post($post_id);
-        $class_name = ['home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => ''];
+        $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '', 'all_users'=> '');
         $this->load->view('header', $class_name);
         $this->load->view('v_single_post', $data);
         $this->load->view('footer');
@@ -62,15 +62,15 @@ class Blog extends CI_Controller {
         //when the user is not an admin and author
         if (!$this->check_permissions('author'))
         {
-            redirect(base_url() . 'index.php/users/login');
+            redirect(base_url() . 'users/login');
         }
         if ($this->input->post()) {
             $data = array('post_title' => $this->input->post('post_title'), 'post' => $this->input->post('post'), 'active' => 1,);
             $this->m_db->insert_post($data);
-            redirect(base_url() . 'index.php/blog/');
+            redirect(base_url() . 'blog/');
         } else {
 
-            $class_name = ['home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => ''];
+            $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '', 'all_users'=> '');
             $this->load->view('header', $class_name);
             $this->load->view('v_new_post');
             $this->load->view('footer');
@@ -95,7 +95,7 @@ class Blog extends CI_Controller {
     {
         if (!$this->check_permissions('author'))//when the user is not an admin and author
         {
-            redirect(base_url() . 'index.php/users/login');
+            redirect(base_url() . 'users/login');
         }
         $data['success'] = 0;
 
@@ -106,7 +106,7 @@ class Blog extends CI_Controller {
         }
         $data['post'] = $this->m_db->get_post($post_id);
 
-        $class_name = ['home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => ''];
+        $class_name = array('home_class' => 'current', 'login_class' => '', 'register_class' => '', 'upload_class' => '', 'contact_class' => '', 'all_users'=> '');
         $this->load->view('header', $class_name);
         $this->load->view('v_edit_post', $data);
         $this->load->view('footer');
@@ -116,9 +116,9 @@ class Blog extends CI_Controller {
     {
         if (!$this->check_permissions('author'))//when the user is not an andmin and author
         {
-            redirect(base_url() . 'index.php/users/login');
+            redirect(base_url() . 'users/login');
         }
         $this->m_db->delete_post($post_id);
-        redirect(base_url() . 'index.php/blog/');
+        redirect(base_url() . 'blog/');
     }
 }
