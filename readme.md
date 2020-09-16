@@ -37,4 +37,4 @@ All the views are named as their functionality. the header and footer view conta
 5. How go to your browser and hit the url for that project if virtual host created otherwise try hitting `localhost/CodeIgnitor-Post` in browser's address bar. Now, you should see that home page of this project. 
 
 ### Screenshot
-![List of All Post](https://cloud.githubusercontent.com/assets/7629427/22406304/337a220e-e67b-11e6-981f-d5f14f0352a5.png)
+![List of All Post]
